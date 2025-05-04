@@ -32,7 +32,7 @@ const ActiveStyle = ({ isActive }) => {
   };
 function Navbar() {
   return (
-    <section className="py-[40px]">
+    <section className="pt-[40px] pb-4 border-b border-b-[rgba(0,0,0,0.40)]">
       <div className="container">
         <div className="grid grid-cols-[200px_1fr_auto] justify-between items-center">
           {/* logo */}
@@ -49,7 +49,7 @@ function Navbar() {
             <div class="max-w-md mx-auto">
               <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-[4px] bg-[#F5F5F5] overflow-hidden pl-5 pr-2">
                 <input
-                  class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                  class="h-full w-full outline-none text-[12px] leading-[18px] text-gray-700 pr-2"
                   type="text"
                   id="search"
                   placeholder="What are you looking for?"

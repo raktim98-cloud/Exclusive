@@ -4,6 +4,7 @@ import Home from "./assets/Pages/Home";
 import About from "./assets/Pages/About";
 import Singup from "./assets/Pages/Singup";
 import Contact from "./assets/Pages/Contact";
+
 function App() {
   return (
     <>
