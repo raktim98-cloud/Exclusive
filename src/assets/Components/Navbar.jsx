@@ -2,6 +2,8 @@ import { NavLink } from "react-router";
 import { IoIosSearch } from "react-icons/io";
 import { GiSelfLove } from "react-icons/gi";
 import { IoCartOutline } from "react-icons/io5";
+import { useContext } from "react";
+import { ThemeContext } from "./ThemeContext";
 
 const menuData = [
   {
@@ -31,6 +33,9 @@ const ActiveStyle = ({ isActive }) => {
       : "text-[16px] leading-[24px] text-black hover:text-blue-300 relative group";
   };
 function Navbar() {
+ const obj = useContext(ThemeContext)
+  const {value} = obj
+  
   return (
     <section className="pt-[40px] pb-4 border-b border-b-[rgba(0,0,0,0.40)]">
       <div className="container">
@@ -60,7 +65,7 @@ function Navbar() {
               </div>
             </div>
             <div className="flex justify-between items-center gap-4">
-                <a className="text-[20px]" href="#"><GiSelfLove/></a>
+                <a className="text-[20px] relative" href="#"><GiSelfLove/><span className="absolute -top-4 bg-black text-white text-sm">{value}</span></a>
                 <a className="text-[20px]" href="#"><IoCartOutline/></a>
 
             </div>

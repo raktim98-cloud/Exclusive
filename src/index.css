@@ -53,3 +53,31 @@ body{
   background-color: #52bbe8 !important; 
 opacity:1;
 }
+
+/* Coustom css */
+#banner .slick-dots {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+
+}
+#banner .slick-dots li button {
+  background: red;
+  width: 10px;
+  height: 10px;
+  background:rgba(255, 255, 255, 0.5) ;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  font-size: 0;
+  padding: 0;
+  margin: 0;
+}
+#banner .slick-dots li.slick-active button {
+  background: #DB4444;
+  border: 2px solid #ffffff;
+}
+#banner .slick-dots li button::before {
+  display: none;
+} 

@@ -86,7 +86,7 @@ function Banner() {
     slidesToScroll: 1,
   };
   return (
-    <section>
+    <section id="banner">
       <div className="container">
         <div className="grid grid-cols-[217px_1fr]">
           <ul className="flex flex-col gap-4 py-10 pr-4">
@@ -95,7 +95,7 @@ function Banner() {
             ))}
           </ul>
           {/* slider Part */}
-          <div className="h-[344px] border-l border-l-[rgba(0,0,0,0.30)] pl-[40px]">
+          <div className="h-[344px] border-l border-l-[rgba(0,0,0,0.30)] pl-[40px] py-10">
             <div className="w-[892px] ">
               <Slider {...settings}>
               {sliderData?.map((slideData) => (
