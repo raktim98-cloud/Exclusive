@@ -3,7 +3,7 @@ import { IoIosSearch } from "react-icons/io";
 import { GiSelfLove } from "react-icons/gi";
 import { IoCartOutline } from "react-icons/io5";
 import { useContext } from "react";
-import { ThemeContext } from "./ThemeContext";
+import { CartContext } from "./CartContext";
 
 const menuData = [
   {
@@ -22,7 +22,7 @@ const menuData = [
     link: "/contact",
   },
   {
-    id: 1,
+    id: 4,
     text: "Sing Up",
     link: "/singup",
   },
@@ -33,8 +33,8 @@ const ActiveStyle = ({ isActive }) => {
       : "text-[16px] leading-[24px] text-black hover:text-blue-300 relative group";
   };
 function Navbar() {
- const obj = useContext(ThemeContext)
-  const {value} = obj
+ const {wishCount} = useContext(CartContext)
+ 
   
   return (
     <section className="pt-[40px] pb-4 border-b border-b-[rgba(0,0,0,0.40)]">
@@ -51,21 +51,21 @@ function Navbar() {
           </ul>
           <div className="flex items-center justify-center gap-6">
             {/* search bar */}
-            <div class="max-w-md mx-auto">
-              <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-[4px] bg-[#F5F5F5] overflow-hidden pl-5 pr-2">
+            <div className="max-w-md mx-auto">
+              <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-[4px] bg-[#F5F5F5] overflow-hidden pl-5 pr-2">
                 <input
-                  class="h-full w-full outline-none text-[12px] leading-[18px] text-gray-700 pr-2"
+                  className="h-full w-full outline-none text-[12px] leading-[18px] text-gray-700 pr-2"
                   type="text"
                   id="search"
                   placeholder="What are you looking for?"
                 />
-                <div class="grid place-items-center h-full w-12 text-gray-300">
+                <div className="grid place-items-center h-full w-12 text-gray-300">
                   <a className="text-black text-2xl" href="#"><IoIosSearch/></a>
                 </div>
               </div>
             </div>
             <div className="flex justify-between items-center gap-4">
-                <a className="text-[20px] relative" href="#"><GiSelfLove/><span className="absolute -top-4 bg-black text-white text-sm">{value}</span></a>
+                <a className="text-[20px] relative" href="#"><GiSelfLove/><span className="absolute -top-4 bg-black text-white text-sm">{wishCount}</span></a>
                 <a className="text-[20px]" href="#"><IoCartOutline/></a>
 
             </div>

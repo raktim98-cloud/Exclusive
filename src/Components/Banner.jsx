@@ -1,8 +1,6 @@
 import { FaGreaterThan } from "react-icons/fa6";
-import SliderBg_1 from "../Image/Slider_image_1.jpg";
-import SliderBg_2 from "../Image/Slider_image_1.jpg";
-import SliderBg_3 from "../Image/Slider_image_1.jpg";
-import Slider_icon from "../Image/Slider_logo.png";
+import SliderBg_1 from "../assets/Image/Slider_image_1.jpg";
+import Slider_icon from "../assets/Image/Slider_logo.png";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Slider from "react-slick";
 
@@ -66,14 +64,14 @@ const sliderData = [
     logo: Slider_icon,
     brand: "iPhone 14 Series",
     title: "Up to 10% off Voucher",
-    bgimage: SliderBg_2,
+    bgimage: SliderBg_1,
   },
   {
     id: 3,
     logo: Slider_icon,
     brand: "iPhone 14 Series",
     title: "Up to 10% off Voucher",
-    bgimage: SliderBg_3,
+    bgimage: SliderBg_1,
   },
 ];
 

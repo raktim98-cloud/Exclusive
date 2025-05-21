@@ -1,11 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import Layout from "./assets/Components/Layout";
-import Home from "./assets/Pages/Home";
-import About from "./assets/Pages/About";
-import Singup from "./assets/Pages/Singup";
-import Contact from "./assets/Pages/Contact";
-import { ThemeProvider } from "./assets/Components/ThemeContext";
 
+
+
+import Layout from "./Components/Layout";
+import Home from "./Pages/Home"
+import About from "./Pages/About"
+import Signup from "./Pages/Signup"
+import Contact from "./Pages/Contact"
+import Shop from "./Pages/Shop"
+import { ThemeProvider } from "./Components/CartContext";
 function App() {
   return (
       <ThemeProvider>
@@ -14,8 +17,9 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="/about" element={<About />} />
-              <Route path="/singup" element={<Singup />} />
+              <Route path="/singup" element={<Signup />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/shop" element={<Shop/>} />
             </Route>
           </Routes>
         </BrowserRouter>
