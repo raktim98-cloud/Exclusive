@@ -1,8 +1,13 @@
 import { useState } from "react";
 import Button from "../Components/Button";
 import Input from "../Components/Input";
+import { useUser } from "../context/UserContext";
 
 function Signup() {
+  const {currentUser} = useUser();
+  console.log(currentUser);
+  
+  
   const [newUser,setNewUser] = useState({
     name:"",
     email:"",
