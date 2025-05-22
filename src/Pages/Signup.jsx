@@ -4,7 +4,7 @@ import Input from "../Components/Input";
 import { useUser } from "../context/UserContext";
 
 function Signup() {
-  const {currentUser} = useUser();
+  const {currentUser,addUser} = useUser();
   console.log(currentUser);
   
   
@@ -15,7 +15,8 @@ function Signup() {
   })
   const handelSignUp = (e)=> {
     e.preventDefault()
-    console.log(newUser);
+    addUser()
+    console.log(currentUser);
     
   }
   return (
