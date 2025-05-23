@@ -5,7 +5,6 @@ import { useUser } from "../context/UserContext";
 
 function Signup() {
   const {currentUser,addUser} = useUser();
-  console.log(currentUser);
   
   
   const [newUser,setNewUser] = useState({
@@ -15,7 +14,7 @@ function Signup() {
   })
   const handelSignUp = (e)=> {
     e.preventDefault()
-    addUser()
+    addUser(newUser.name,newUser.email,newUser.password)
     console.log(currentUser);
     
   }
