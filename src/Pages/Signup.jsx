@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../Components/Button";
 import Input from "../Components/Input";
 import { useUser } from "../context/UserContext";
+import OutlineButton from "../Components/OutlineButton";
 
 function Signup() {
   const {currentUser,addUser} = useUser();
@@ -18,6 +19,8 @@ function Signup() {
     console.log(currentUser);
     
   }
+  
+
   return (
     <section>
       <div className="grid grid-cols-[4fr_3fr] py-15 ">
@@ -35,10 +38,14 @@ function Signup() {
           <p className="text-[16px] leading-[24px] text-black">
             Enter your details below
           </p>
-          <Input onChange={(e)=> setNewUser({...newUser, [e.target.name]: e.target.value})} value={newUser.name} type="text" placeholder="Name" name="name" />
+          <Input onChange={(e)=> vales()} valus={newUser.name} value={newUser.name} type="text" placeholder="Name" name="name" />
           <Input onChange={(e)=> setNewUser({...newUser, [e.target.name]: e.target.value})} value={newUser.email} type="email" placeholder="Email or Phone Number" name="email" />
           <Input onChange={(e)=> setNewUser({...newUser, [e.target.name]: e.target.value})} value={newUser.password} type="password" placeholder="Password" name="password" />
           <Button onClick={handelSignUp} type="submit" TagName={"button"} className={`text-white`}>Create Account</Button>
+          <OutlineButton onClick={handelSignUp} type="submit" TagName={"button"}>
+            <img src="/google_icon.png" alt="google_icon" />
+            Sign up with Google
+            </OutlineButton>
         </form>
       </div>
     </section>
