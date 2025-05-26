@@ -8,6 +8,7 @@ import About from "./Pages/About"
 import Signup from "./Pages/Signup"
 import Contact from "./Pages/Contact"
 import Shop from "./Pages/Shop"
+import Login from "./Pages/Login"
 import { ThemeProvider } from "./Components/CartContext";
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/singup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/shop" element={<Shop/>} />
             </Route>

@@ -1,51 +1,139 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from "react";
-import {  createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+} from "firebase/auth";
 import { auth } from "../firebase.config";
+import { toast } from "react-toastify";
+
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const [currentUser, setCurrentUser] = useState(null);
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{6}$/;
-  const nameRegex = /^[a-zA-Z]{4,20}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+  const nameRegex = /^[A-Z][a-z]+(?:\s[A-Z][a-z]+)*$/;
 
+  // const TostyfyPass = () => toast.error("Not Easy Guys! Invalid Pass")
+  // const TostyfyName = () => toast.error("Name Is Totally Unavailable!")
+  // const TostyfyEmail = () => toast.error("Try To Another Email!")
 
-  function addUser(name,email,password) {
+  const Tostyfy = (type, message) => {
+    type === "success" && toast.success(message);
+    type === "error" && toast.error(message);
+    type === "warn" && toast.warn(message);
+  };
+
+  function addUser(name, email, password) {
     if (nameRegex.test(name)) {
       if (emailRegex.test(email)) {
         if (passwordRegex.test(password)) {
-          alert("Successfully Login");
           createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
               // Signed up
               const user = userCredential.user;
               console.log(user);
-              
+
+              Tostyfy("success", "SuccessFully Login");
+
               // ...
             })
             .catch((error) => {
-              // const errorCode = error.code;
+              const errorCode = error.code;
               const errorMessage = error.message;
-              console.log(errorMessage);
-              
+
+              if (errorCode.includes("email-already-in-use")) {
+                Tostyfy("error", "Ops! Email is alredy in used");
+              }
+
               // ..
             });
         } else {
-          alert("password invelid");
+          Tostyfy("error", "Not Easy Guys! Invalid Pass");
         }
       } else {
-        alert("email invelid");
+        Tostyfy("warn", "Try To Another Email!");
       }
     } else {
-      alert("invalid Name");
+      Tostyfy("warn", "Name Is Totally Unavailable!");
     }
   }
+  const provider = new GoogleAuthProvider();
+
+  function googleSignUp() {
+    console.log("google");
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
+  const facebookProvider = new FacebookAuthProvider();
+
+  function facebookSignUp() {
+    signInWithPopup(auth, facebookProvider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        console.log(accessToken);
+
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        console.log(email);
+
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error);
+
+        // ...
+      });
+  }
+
+  //   function googleSignUp(e) {
+  //   e.preventDefault(); // Prevent form submission
+  //   signInWithPopup(auth, provider)
+  //     .then((result) => {
+  //       // Handle success
+  //     }).catch((error) => {
+  //       // Handle errors
+  //     });
+  // }
 
   return (
-    <UserContext.Provider value={{ currentUser, addUser }}>
+    <UserContext.Provider
+      value={{ currentUser, addUser, googleSignUp, facebookSignUp }}
+    >
       {children}
     </UserContext.Provider>
   );
