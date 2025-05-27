@@ -1,12 +1,15 @@
-import React from 'react'
+
 import Banner from '../Components/Banner'
-import Allproducts from '../Components/Allproducts'
+import Catagory from '../Components/Catagory'
+import FlashSells from '../Components/FlashSells'
 
 function Home() {
   return (
     <div>
       <Banner/>
-      <Allproducts/>
+      <FlashSells/>
+      <Catagory/>
+      
     </div>
   )
 }
