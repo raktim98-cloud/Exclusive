@@ -4,6 +4,7 @@ import Monitor_I from "../../assets/Image/Product_image/Monitor_image.png";
 import Playstation_I from "../../assets/Image/Product_image/Playstation_image.png";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { BsEye } from "react-icons/bs";
+import Slider from "react-slick/lib/slider";
 
 const productData = [
   {
@@ -15,8 +16,8 @@ const productData = [
     discount: 40,
     rating: 4,
     reviews: 88,
-    hear_icon:<IoMdHeartEmpty />,
-    eye_icon:<BsEye />
+    hear_icon: <IoMdHeartEmpty />,
+    eye_icon: <BsEye />,
   },
   {
     id: 2,
@@ -27,8 +28,8 @@ const productData = [
     discount: 30,
     rating: 5,
     reviews: 75,
-    hear_icon:<IoMdHeartEmpty />,
-    eye_icon:<BsEye />
+    hear_icon: <IoMdHeartEmpty />,
+    eye_icon: <BsEye />,
   },
   {
     id: 3,
@@ -39,8 +40,8 @@ const productData = [
     discount: 30,
     rating: 5,
     reviews: 99,
-    hear_icon:<IoMdHeartEmpty />,
-    eye_icon:<BsEye />
+    hear_icon: <IoMdHeartEmpty />,
+    eye_icon: <BsEye />,
   },
   {
     id: 4,
@@ -51,17 +52,31 @@ const productData = [
     discount: 30,
     rating: 4,
     reviews: 88,
-    hear_icon:<IoMdHeartEmpty />,
-    eye_icon:<BsEye />
+    hear_icon: <IoMdHeartEmpty />,
+    eye_icon: <BsEye />,
   },
 ];
 
 function FlashSellsProduct() {
+  const settings = {
+    className: "center",
+    autoplay: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    dots: false,
+    speed: 2000,
+    autoplaySpeed: 2000,
+    cssEase: "linear",
+  };
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {productData?.map((product) => (
-        <ProductList key={product.id} {...product} />
-      ))}
+    <div className="slider-container">
+      <Slider {...settings}>
+        {productData.map((product) => (
+          <div key={product.id} className="px-1.5">
+            <ProductList {...product} />
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 }
@@ -78,7 +93,6 @@ const ProductList = ({
   reviews,
   hear_icon,
   eye_icon,
-
 }) => {
   return (
     <div className="group relative border  rounded shadow hover:shadow-lg transition bg-white">
@@ -88,14 +102,14 @@ const ProductList = ({
           -{discount}%
         </div>
         {/* Heart and eye icon */}
-          <div className="flex flex-col gap-2 absolute top-2 right-1.5">
-            <div className=" text-[16px] p-2 font-bold rounded-full bg-white">
-          {hear_icon}
-        </div>
-        <div className="text-[16px] p-2 font-bold rounded-full bg-white">
-          {eye_icon}
-        </div>
+        <div className="flex flex-col gap-2 absolute top-2 right-1.5">
+          <div className=" text-[16px] p-2 font-bold rounded-full bg-white">
+            {hear_icon}
           </div>
+          <div className="text-[16px] p-2 font-bold rounded-full bg-white">
+            {eye_icon}
+          </div>
+        </div>
         {/* Image Container */}
         <div className="w-[190px] h-[180px] mx-auto  flex items-center justify-center">
           <img

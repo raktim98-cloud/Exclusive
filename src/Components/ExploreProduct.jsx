@@ -8,7 +8,7 @@ function ExploreProduct() {
     <section className="py-[70px]">
       <div className="container">
         <div className="flex items-center justify-between">
-          <SectionHead catagories="Today’s" title={"Flash Sales"}/>
+          <SectionHead catagories="Our Products" title={"Explore Our Products"}/>
           {/* allow Button */}
           <div className="flex items-center justify-center gap-4">
             <button>
