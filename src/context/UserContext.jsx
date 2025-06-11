@@ -28,7 +28,7 @@ const UserProvider = ({ children }) => {
     type === "error" && toast.error(message);
     type === "warn" && toast.warn(message);
   };
-
+{/* Sigup user*/}
   function addUser(name, email, password) {
     if (nameRegex.test(name)) {
       if (emailRegex.test(email)) {
