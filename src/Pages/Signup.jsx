@@ -7,7 +7,7 @@ import { Link } from "react-router";
 import { Bounce, ToastContainer } from "react-toastify";
 
 function Signup() {
-  const { currentUser, addUser, googleSignUp, facebookSignUp } = useUser();
+  const { currentUser, addUser, googleSignUp, facebookSignUp} = useUser();
 
   const [newUser, setNewUser] = useState({
     name: "",

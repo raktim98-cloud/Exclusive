@@ -5,6 +5,7 @@ import { IoCartOutline } from "react-icons/io5";
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
 import { FaRegUser } from "react-icons/fa6";
+import { useUser } from "../context/UserContext";
 
 const menuData = [
   {
@@ -63,6 +64,11 @@ const ActiveStyle = ({ isActive }) => {
 };
 function Navbar() {
   const { wishCount } = useContext(CartContext);
+  const {currentUser,handleSignOut} = useUser();
+  console.log(currentUser);
+  
+  
+  
 
   return (
     <section className="pt-[40px] pb-4 border-b border-b-[rgba(0,0,0,0.40)]">
@@ -106,29 +112,36 @@ function Navbar() {
                   <IoCartOutline />
                 </a>
               </div>
-              <div className="group relative">
-                {/* Trigger button */}
-                <button className="bg-red-600 rounded-full p-2 hover:bg-red-700 transition-colors duration-200">
-                  <a className="text-[12px] text-white" href="#">
+              
+                 {currentUser ? (
+                <div className="group relative">
+                  <button className="bg-red-600 rounded-full p-2 hover:bg-red-700 transition-colors duration-200"> 
                     <FaRegUser />
-                  </a>
-                </button>
-
-                {/* Dropdown menu */}
-                <div className="absolute hidden group-hover:block -right-2 mt-2  origin-top-right rounded-md bg-gray-700 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 transition-all duration-300 transform opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0">
-                  <div className="px-4 py-3">
-                    <div className="flex flex-col gap-4">
-                      {menuItems?.map((drop) => (
-                        <DropList
-                          key={drop.id}
-                          dropIcon={drop.dropIcon}
-                          dis={drop.dis}
-                        />
-                      ))}
+                  </button>
+                  <div className="absolute hidden group-hover:block -right-2 mt-2 origin-top-right rounded-md bg-gray-700 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 transition-all duration-300 transform opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 after:content-[''] after:absolute after:left-0 after:top-0 after:-translate-y-3 after:w-full after:h-3 after:bg-transparent">
+                    <div className="px-4 py-3">
+                      <div className="flex flex-col gap-4">
+                        {menuItems?.map((drop) => (
+                          <DropList
+                            key={drop.id}
+                            dropIcon={drop.dropIcon}
+                            dis={drop.dis}
+                          />
+                        ))}
+                        <button onClick={handleSignOut} className="px-2 py-1 bg-blue-600 text-white">Logout</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <NavLink 
+                  to="/login" 
+                  className="text-[16px] leading-[24px] text-black hover:text-blue-300"
+                >
+                  Login
+                </NavLink>
+              )}
+             
             </div>
           </div>
         </div>

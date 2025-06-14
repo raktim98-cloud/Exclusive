@@ -1,10 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut 
 } from "firebase/auth";
 import { auth } from "../firebase.config";
 import { toast } from "react-toastify";
@@ -14,6 +17,13 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return unsubscribe; // Cleanup subscription on unmount
+  }, []);
+  
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
@@ -39,7 +49,7 @@ const UserProvider = ({ children }) => {
               const user = userCredential.user;
               console.log(user);
 
-              Tostyfy("success", "SuccessFully Login");
+              Tostyfy("success", "SuccessFully Creat A Account");
 
               // ...
             })
@@ -63,32 +73,100 @@ const UserProvider = ({ children }) => {
       Tostyfy("warn", "Name Is Totally Unavailable!");
     }
   }
-  const provider = new GoogleAuthProvider();
+{/*Login user */}
+function logInUser(email, password) {
+      if (emailRegex.test(email)) {
+        if (passwordRegex.test(password)) {
+          signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              // Signed up
+              const user = userCredential.user;
+              console.log(user);
 
-  function googleSignUp() {
-    console.log("google");
+              Tostyfy("success", "SuccessFully Login");
 
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+              // ...
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              if (errorCode.includes("auth/invalid-credential")) {
+                Tostyfy("error","invalid email & Password");
+              }
+            });
+        } else {
+          Tostyfy("error", "Not Easy Guys! Invalid Pass");
+        }
+      } else {
+        Tostyfy("warn", "Try To Another Email!");
+      }
   }
+  
+
+  {/* SIGN OUT USER */}
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     // User is signed in, see docs for a list of available properties
+//     // https://firebase.google.com/docs/reference/js/auth.user
+//     const uid = user.uid;
+//     console.log(uid);
+    
+//     // ...
+//   } else {
+//     console.log("User is signed out");
+    
+//   }
+// });
+
+function handleSignOut (){
+signOut (auth).then(() => {
+  Tostyfy("success" , " Sign Out SuccessFully")
+}).catch((error) => {
+   Tostyfy("error",error )
+});
+}
+
+const provider = new GoogleAuthProvider();
+
+ async function googleSignUp() {
+    try {
+        console.log("Attempting Google sign-in...");
+        
+        const result = await signInWithPopup(auth, provider);
+        
+        // 🔧 Safer credential handling
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        if (!credential) {
+            throw new Error("No credential returned from Google");
+        }
+        
+        const token = credential.accessToken;
+        const user = result.user;
+        
+        console.log("Google sign-in successful:", user);
+        
+        // ✅ Essential: Handle the user in your app
+        // Example:
+        // 1. Store in state (if using React)
+        // 2. Add to your database if new user
+        // 3. Redirect or update UI
+        
+        return user; // Make the user available to the caller
+        
+    } catch (error) {
+        console.error("Google sign-in failed:", error);
+        
+        // ✅ Better error handling
+        if (error.code === 'auth/popup-closed-by-user') {
+            console.warn("User closed the popup window");
+        } else {
+            // Show user-friendly message
+            alert(`Sign-in failed: ${error.message}`);
+        }
+        
+        // ✅ Return null or re-throw based on your needs
+        return null;
+    }
+}
   const facebookProvider = new FacebookAuthProvider();
 
   function facebookSignUp() {
@@ -132,7 +210,7 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ currentUser, addUser, googleSignUp, facebookSignUp }}
+      value={{ currentUser, addUser, googleSignUp, facebookSignUp ,logInUser,handleSignOut}}
     >
       {children}
     </UserContext.Provider>

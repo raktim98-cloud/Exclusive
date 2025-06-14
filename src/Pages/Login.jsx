@@ -4,23 +4,25 @@ import Input from "../Components/Input";
 import { useUser } from "../context/UserContext";
 import { Link } from "react-router";
 
+import { ToastContainer, Bounce  } from "react-toastify";
+
 function Login() {
-  const {currentUser,addUser} = useUser();
+  const {logInUser} = useUser();
+  
   
   
   const [newUser,setNewUser] = useState({
     email:"",
     password:""
   })
-  const handelSignUp = (e)=> {
+  const handelLogIn = (e)=> {
     e.preventDefault()
-    addUser(newUser.email,newUser.password)
-    console.log(currentUser);
+    logInUser(newUser.email,newUser.password)
+    
     
   }
  
-  const handleChangeUp = (e) => {
-    console.log(newUser.name);
+  const handleChange = (e) => {
     setNewUser({...newUser, [e.target.name] : e.target.value})
   }
   
@@ -28,6 +30,19 @@ function Login() {
 
   return (
     <section>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
       <div className="grid grid-cols-[4fr_3fr] py-15 ">
         <div className="max-w-[805px] max-h-[780px] mx-auto">
           <img
@@ -44,10 +59,10 @@ function Login() {
             Enter your details below
           </p>
           
-          <Input onChange={(e)=> handleChangeUp(e)} value={setNewUser.email} type="email" placeholder="Email or Phone Number" name="email" />
-          <Input onChange={(e)=> handleChangeUp(e)} value={setNewUser.password} type="password" placeholder="Password" name="password" />
+          <Input onChange={(e)=> handleChange(e)} value={setNewUser.email} type="email" placeholder="Email or Phone Number" name="email" />
+          <Input onChange={(e)=> handleChange(e)} value={setNewUser.password} type="name" placeholder="Password" name="password" />
           <div className="flex justify-center items-center gap-[87px]">
-            <Button onClick={handelSignUp} type="submit" TagName={"button"} className={`text-white px-[48px] py-[16px]`}>Log In</Button>
+            <Button onClick={handelLogIn} type="submit" TagName={"button"} className={`text-white px-[48px] py-[16px]`}>Log In</Button>
             <Link>Forget Password</Link>
           </div>
           
