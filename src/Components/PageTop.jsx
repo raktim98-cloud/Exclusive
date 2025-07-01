@@ -9,7 +9,7 @@ function PageTop() {
           <h5>
             Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
           </h5>
-          <NavLink to={"/shop"}><span className="underline">Shop</span></NavLink>
+          <NavLink to={"/allproduct"}><span className="underline">Shop</span></NavLink>
         </div>
 
         <div className="relative inline-block group">

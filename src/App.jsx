@@ -10,6 +10,9 @@ import Contact from "./Pages/Contact"
 import Shop from "./Pages/Shop"
 import Login from "./Pages/Login"
 import { ThemeProvider } from "./Components/CartContext";
+
+import AllProduct from "./Components/AllProduct";
+import ProductDetails from "./Components/ProductDetails";
 function App() {
   return (
       <ThemeProvider>
@@ -22,6 +25,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/shop" element={<Shop/>} />
+              <Route path="/allproduct" element={<AllProduct/>} />
+              <Route path="/allproduct/:id" element={<ProductDetails/> } />
             </Route>
           </Routes>
         </BrowserRouter>

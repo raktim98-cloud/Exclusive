@@ -68,6 +68,8 @@ function FlashSellsProduct() {
     autoplaySpeed: 2000,
     cssEase: "linear",
   };
+
+  
   return (
     <div className="slider-container">
       <Slider {...settings}>
