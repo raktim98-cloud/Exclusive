@@ -65,7 +65,7 @@ const ActiveStyle = ({ isActive }) => {
 function Navbar() {
   const { wishCount } = useContext(CartContext);
   const {currentUser,handleSignOut} = useUser();
-  console.log(currentUser);
+ 
   
   
   

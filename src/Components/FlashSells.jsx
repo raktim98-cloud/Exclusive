@@ -24,7 +24,7 @@ function FlashSells() {
 
         {/* Product jsx Component */}
         <div className="py-5">
-          <FlashSellsProduct />
+          <FlashSellsProduct  />
         </div>
         <div className="text-center text-white py-[40px]">
           <button className="bg-red-500 text-[16px] leading-6 font-medium px-[48px] py-[16px]">

@@ -47,7 +47,6 @@ const UserProvider = ({ children }) => {
             .then((userCredential) => {
               // Signed up
               const user = userCredential.user;
-              console.log(user);
 
               Tostyfy("success", "SuccessFully Creat A Account");
 
@@ -142,7 +141,6 @@ const provider = new GoogleAuthProvider();
         const token = credential.accessToken;
         const user = result.user;
         
-        console.log("Google sign-in successful:", user);
         
         // ✅ Essential: Handle the user in your app
         // Example:
@@ -178,7 +176,6 @@ const provider = new GoogleAuthProvider();
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = FacebookAuthProvider.credentialFromResult(result);
         const accessToken = credential.accessToken;
-        console.log(accessToken);
 
         // IdP data available using getAdditionalUserInfo(result)
         // ...
@@ -189,7 +186,6 @@ const provider = new GoogleAuthProvider();
         const errorMessage = error.message;
         // The email of the user's account used.
         const email = error.customData.email;
-        console.log(email);
 
         // The AuthCredential type that was used.
         const credential = FacebookAuthProvider.credentialFromError(error);

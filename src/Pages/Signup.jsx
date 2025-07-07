@@ -17,10 +17,8 @@ function Signup() {
   const handelSignUp = (e) => {
     e.preventDefault();
     addUser(newUser.name, newUser.email, newUser.password);
-    console.log(currentUser);
   };
   const handelChange = (e) => {
-    console.log(newUser.name);
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
   const handelGoogle = (e) => {

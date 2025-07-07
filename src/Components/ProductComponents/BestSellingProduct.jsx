@@ -89,7 +89,6 @@ const ProductList = ({
   hear_icon,
   eye_icon,
 }) => {
-  console.log(Math.round(3.6));
 
   return (
     <div className="group relative border  rounded shadow hover:shadow-lg transition bg-white">

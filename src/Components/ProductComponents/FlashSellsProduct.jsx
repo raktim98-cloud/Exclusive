@@ -5,6 +5,9 @@ import Playstation_I from "../../assets/Image/Product_image/Playstation_image.pn
 import { IoMdHeartEmpty } from "react-icons/io";
 import { BsEye } from "react-icons/bs";
 import Slider from "react-slick/lib/slider";
+import { useEffect, useState } from "react";
+import { FaEye } from "react-icons/fa6";
+import { previousPrice } from "../../utils/utils";
 
 const productData = [
   {
@@ -58,6 +61,27 @@ const productData = [
 ];
 
 function FlashSellsProduct() {
+
+    const [product, setProduct] = useState([]);
+
+    
+  useEffect(()=> {
+        const fetchProduct = async () => {
+      try {
+        const res = await fetch("https://api.escuelajs.co/api/v1/products");
+        const data = await res.json();
+        setProduct(data);
+      } catch (error) {
+        console.log(error); 
+      }
+    };
+    fetchProduct()
+  }, [])
+
+  const flashSale = product?.filter((p) => p.category.name === "Miscellaneous")
+  console.log(flashSale);
+  
+
   const settings = {
     className: "center",
     autoplay: true,
@@ -73,9 +97,9 @@ function FlashSellsProduct() {
   return (
     <div className="slider-container">
       <Slider {...settings}>
-        {productData.map((product) => (
+        {flashSale.map((product) => (
           <div key={product.id} className="px-1.5">
-            <ProductList {...product} />
+            <ProductList product={product} />
           </div>
         ))}
       </Slider>
@@ -85,38 +109,28 @@ function FlashSellsProduct() {
 
 export default FlashSellsProduct;
 
-const ProductList = ({
-  image,
-  title,
-  price,
-  oldPrice,
-  discount,
-  rating,
-  reviews,
-  hear_icon,
-  eye_icon,
-}) => {
+const ProductList = ({product}) => {
   return (
     <div className="group relative border  rounded shadow hover:shadow-lg transition bg-white">
       <div className="Image bg-red-200 py-9">
         {/* Discount Badge */}
         <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
-          -{discount}%
+          -{product.discountPercentage}%
         </div>
         {/* Heart and eye icon */}
         <div className="flex flex-col gap-2 absolute top-2 right-1.5">
           <div className=" text-[16px] p-2 font-bold rounded-full bg-white">
-            {hear_icon}
+            <IoMdHeartEmpty />
           </div>
           <div className="text-[16px] p-2 font-bold rounded-full bg-white">
-            {eye_icon}
+            <FaEye />
           </div>
         </div>
         {/* Image Container */}
         <div className="w-[190px] h-[180px] mx-auto  flex items-center justify-center">
           <img
-            src={image}
-            alt={title}
+            src={product.images[0]}
+            alt={product.thumbnail}
             className="w-full h-full object-contain"
           />
         </div>
@@ -128,17 +142,17 @@ const ProductList = ({
 
       {/* Product Details */}
       <div className="p-4">
-        <h3 className="font-semibold text-sm">{title}</h3>
+        <h3 className="font-semibold text-sm">{product.title}</h3>
         <div className="text-red-500 font-bold">
-          ${price}
+          ${product.price}
           <span className="text-gray-400 line-through text-sm ml-2">
-            ${oldPrice}
+            ${previousPrice(product.price, product.discountPercentage)}
           </span>
         </div>
         <div className="flex items-center text-sm text-yellow-500 mt-1">
-          {"★".repeat(Math.round(rating))}
-          {"☆".repeat(5 - Math.round(rating))}
-          <span className="text-gray-500 text-xs ml-1">({reviews})</span>
+          {"★".repeat(Math.round(product.rating))}
+          {"☆".repeat(5 - Math.round(product.rating))}
+          <span className="text-gray-500 text-xs ml-1">({696})</span>
         </div>
       </div>
     </div>

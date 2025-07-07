@@ -10,6 +10,7 @@ function ProductDetails() {
   const param = useParams();
 
   const [product, setProduct] = useState({});
+  const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState("M");
 
   const API = `https://dummyjson.com/products/${param.id}`;
@@ -23,7 +24,9 @@ function ProductDetails() {
     }
   };
 
-  console.log(product);
+  const handleSelectImage = (id)=> {
+    setSelectedImage(id)
+  }
 
   const settings = {
     infinite: product.images?.length > 1,
@@ -59,24 +62,21 @@ function ProductDetails() {
   return (
     <section className="py-10">
       <div className="container">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-[auto_1fr] gap-4">
           {/* 1st Image Part */}
-          <div className="bg-red-700">
-            <div>
-              <div className="bg-[#E0D2D1] px-25 relative">
-                <div>
-                  <div className="slider-container ">
-                    <Slider {...settings}>
-                      {product.images?.map((item) => {
-                        return (
-                          <div>
-                            <img src={item} />
-                          </div>
-                        );
-                      })}
-                    </Slider>
-                  </div>
-                </div>
+          <div className="">
+            <div className="grid grid-cols-[170px_500px] gap-7.5">
+              <div className="flex flex-col gap-1">
+                {product?.images && product?.images.map((image, index)=> {
+                  return (
+                    <div key={index} className="h-[138px] w-[170px] p-3 bg-[#F5F5F5]" onClick={()=> handleSelectImage(index)}>
+                      <img className="w-full" src={ image} alt="" />
+                    </div>
+                  )
+                })}
+              </div>
+              <div className="h-[600px] w-[500px] bg-[#F5F5F5]">
+                <img className="hover:scale-[1.2] transition-all" src={product.images ? product.images[selectedImage]: ""} alt="" />
               </div>
             </div>
           </div>
